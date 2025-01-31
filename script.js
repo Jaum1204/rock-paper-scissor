@@ -19,11 +19,6 @@ function getComputerChoice(){
     return choice
 }
 
-function getHumanChoice(){
-    let choice = prompt("Enter choice (Rock, Paper or Scissors): ")
-    return choice;
-}
-
 function PlayRound(HumanChoice, CompChoice){
     HumanChoice = HumanChoice.toLowerCase()
 
@@ -39,6 +34,8 @@ function PlayRound(HumanChoice, CompChoice){
         return false;
     }
 }
+
+let going = true;
 
 function PlayGame(HC,round){
     
@@ -59,6 +56,16 @@ function PlayGame(HC,round){
     }
     
     content.textContent += `Player: ${PlayerScore} / Computer: ${CompScore}`
+
+    if(PlayerScore >= 5){
+        content.textContent = "\r\nPlayer Wins!";
+        content.style.color = "green"
+        going = false;
+    } else if(CompScore >= 5){
+        content.textContent = "\r\nComputer Wins!";
+        content.style.color = "red"
+        going = false;
+    }
 }
 
 
@@ -66,18 +73,21 @@ let PlayerScore = 0;
 let CompScore = 0;
 let round = 1;
 btn_r.addEventListener("click", () => {
-    PlayGame("rock", round);
-    round++;
+    if (going){
+        PlayGame("rock", round);
+        round++;
+    }
 });
 btn_p.addEventListener("click", () => {
-    PlayGame("paper", round);
-    round++
+    if (going){
+        PlayGame("paper", round);
+        round++;
+    }
 });
 btn_s.addEventListener("click", () => {
-    PlayGame("scissors", round);
-    round++;
+    if (going){
+        PlayGame("scissors", round);
+        round++;
+    }
 });
 
-if(PlayerScore === 5){
-   
-} else if(CompScore === 5){}
