@@ -1,8 +1,19 @@
+const btn_r = document.querySelector("#rock")
+const btn_p = document.querySelector("#paper")
+const btn_s = document.querySelector("#scissors")
+
+const cont_round = document.querySelector(".round")
+const cont_choices = document.querySelector(".choices")
+const cont_round_win = document.querySelector(".round_win")
+const cont_total_score = document.querySelector(".total_score")
+
+
+
 function getComputerChoice(){
     let choice = Math.random();
-    if(choice < 0.33){
+    if(choice <= 0.33){
         choice = "rock"
-    } else if (choice < 0.66){
+    } else if (choice <= 0.66){
         choice = "paper"
     } else{
         choice = "scissors"
@@ -31,34 +42,44 @@ function PlayRound(HumanChoice, CompChoice){
     }
 }
 
-function PlayGame(){
-    let PlayerScore = 0;
-    let CompScore = 0;
+function PlayGame(HC,round){
+    
+    let HumanChoice = HC;
+    let CompChoice = getComputerChoice();
+    
+    cont_round.textContent = `Round ${round}`;
+    cont_choices.textContent = `You chose ${HumanChoice} / Computer chose ${CompChoice}`
 
-    for (let i = 0; i < 5; i ++){
-        let HumanChoice = getHumanChoice();
-        let CompChoice = getComputerChoice();
-
-        console.log(`You chose ${HumanChoice}\nComputer chose ${CompChoice}`)
-
-        if (PlayRound(HumanChoice,CompChoice) === true){
-            PlayerScore++;
-            console.log(`Player wins this round!\nTotal score:\nPlayer: ${PlayerScore}\nComputer: ${CompScore}`)
-        }else if (PlayRound(HumanChoice,CompChoice) === false){
-            CompScore++;
-            console.log(`Computer wins this round!\nTotal score:\nPlayer: ${PlayerScore}\nComputer: ${CompScore}`)
-        }else{
-            console.log(`Draw!\nTotal score:\nPlayer: ${PlayerScore}\nComputer: ${CompScore}`)
-        }
-    }
-    console.log("END OF GAME")
-    if (PlayerScore > CompScore){
-        console.log("Player Won!")
-    } else if (CompScore > PlayerScore){
-        console.log("Computer Won!")
+    if (PlayRound(HumanChoice,CompChoice) === true){
+        PlayerScore++;
+        cont_round_win.textContent = `Player wins this round!`
+    }else if (PlayRound(HumanChoice,CompChoice) === false){
+        CompScore++;
+        cont_round_win.textContent = `Computer wins this round!`
     }else{
-        console.log("Draw")
+        cont_round_win.textContent = `Draw!`
     }
+    
+    cont_total_score.textContent = `Player: ${PlayerScore} / Computer: ${CompScore}`
 }
 
-PlayGame();
+
+let PlayerScore = 0;
+let CompScore = 0;
+let round = 1;
+btn_r.addEventListener("click", () => {
+    PlayGame("rock", round);
+    round++;
+});
+btn_p.addEventListener("click", () => {
+    PlayGame("paper", round);
+    round++
+});
+btn_s.addEventListener("click", () => {
+    PlayGame("scissors", round);
+    round++;
+});
+
+if(PlayerScore === 5){
+   
+} else if(CompScore === 5){}
