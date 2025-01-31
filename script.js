@@ -2,12 +2,10 @@ const btn_r = document.querySelector("#rock")
 const btn_p = document.querySelector("#paper")
 const btn_s = document.querySelector("#scissors")
 
-const cont_round = document.querySelector(".round")
-const cont_choices = document.querySelector(".choices")
-const cont_round_win = document.querySelector(".round_win")
-const cont_total_score = document.querySelector(".total_score")
+const content = document.querySelector("#content")
+const winner = document.querySelector("#winner")
 
-
+content.setAttribute('style', 'white-space: pre;');
 
 function getComputerChoice(){
     let choice = Math.random();
@@ -47,20 +45,20 @@ function PlayGame(HC,round){
     let HumanChoice = HC;
     let CompChoice = getComputerChoice();
     
-    cont_round.textContent = `Round ${round}`;
-    cont_choices.textContent = `You chose ${HumanChoice} / Computer chose ${CompChoice}`
+    content.textContent = `Round ${round}\r\n`;
+    content.textContent += `You chose ${HumanChoice} / Computer chose ${CompChoice}\r\n`
 
     if (PlayRound(HumanChoice,CompChoice) === true){
         PlayerScore++;
-        cont_round_win.textContent = `Player wins this round!`
+        content.textContent += `Player wins this round!\r\n`
     }else if (PlayRound(HumanChoice,CompChoice) === false){
         CompScore++;
-        cont_round_win.textContent = `Computer wins this round!`
+        content.textContent += `Computer wins this round!\r\n`
     }else{
-        cont_round_win.textContent = `Draw!`
+        content.textContent += `Draw!\r\n`
     }
     
-    cont_total_score.textContent = `Player: ${PlayerScore} / Computer: ${CompScore}`
+    content.textContent += `Player: ${PlayerScore} / Computer: ${CompScore}`
 }
 
 
